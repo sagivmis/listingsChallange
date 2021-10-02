@@ -1,0 +1,21 @@
+
+header {
+  height: 15vh;
+  background-color: hsl(180, 29%, 50%);
+  background-image: url('../../assets/bg-header-desktop.svg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.container {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 1000px) {
+  header {
+    background-image: url('../../assets/bg-header-mobile.svg');
+  }
+}

@@ -5,21 +5,21 @@ const LISTING_TYPES = {
 };
 
 const ROLES = {
-    FRONTEND: "frontend",
+    FRONTEND: "Frontend",
     FULL_STACK: "Fullstack",
 };
 
 const LEVELS = {
-    SENIOR: "senior",
+    SENIOR: "Senior",
     MID_WEIGHT: "MidWeight",
     JUNIOR: "Junior",
 };
 
 const LANGUAGES = {
-    HTML: "html",
-    CSS: "css",
-    JS: "javascript",
-    PYTHON: "python",
+    HTML: "HTML",
+    CSS: "CSS",
+    JS: "JavaScript",
+    PYTHON: "Python",
 };
 
 const TOOLS = {

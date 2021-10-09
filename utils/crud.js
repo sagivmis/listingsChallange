@@ -1,8 +1,6 @@
 const { forEach } = require("../DummyData");
 let entries = require("../DummyData");
 
-console.log(entries[1]);
-
 module.exports.createListing = function (details) {
     if (!details)
         return {
@@ -30,18 +28,18 @@ module.exports.createListing = function (details) {
 };
 
 module.exports.getListing = function (searchParams) {
-    /*
-    for (const item in entries){
+    for (const item in entries) {
         const itemStr = item.toString();
-        const listingsToRet = [];
+        const listingsToReturn = [];
         const args = searchParams.split(" ");
+        console.log(args);
         for (const arg of args) {
             if (item.includes(arg)) {
-                if ()
+                // if ()
             }
         }
-    } 
-    */
+    }
+
     return { status: 200, message: "Listing Found", data: entries };
 };
 

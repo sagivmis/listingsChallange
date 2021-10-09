@@ -31,8 +31,7 @@ app.get(`/data`, (req, res) => {
 
 app.post(`/listing`, (req, res) => {
     let listing = {
-        id: 9999,
-        isFeatured: true,
+        isFeatured: false,
         listingTitle: "Dummy Frontend Developer",
         listedCompany: "Dummy Photosnap",
         listingLocation: "Dummy USA only",
@@ -41,6 +40,7 @@ app.post(`/listing`, (req, res) => {
         role: ROLES.FRONTEND,
         level: LEVELS.SENIOR,
         languages: [LANGUAGES.HTML, LANGUAGES.CSS, LANGUAGES.JS],
+        tools: [],
     };
     res.json(createListing(listing));
 });

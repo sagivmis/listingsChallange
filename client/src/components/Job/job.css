@@ -1,0 +1,35 @@
+.job {
+    position: relative;
+    min-height: 70px;
+    background-color: #fdfbf7;
+    margin: 40px;
+    padding: 35px;
+    min-width: 450%;
+    left: -200%;
+    border-radius: 10px;
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
+        rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+        rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.selected {
+    border-left: 5px solid hsl(180, 29%, 50%);
+}
+
+.job-title {
+    display: inline-block;
+    position: absolute;
+    left: 150px;
+    top: 55px;
+    font-weight: 700;
+}
+
+.job-details {
+    display: inline-block;
+    position: absolute;
+    left: 150px;
+    top: 100px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.3);
+    font-size: 14px;
+}

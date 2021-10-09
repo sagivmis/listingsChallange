@@ -1,0 +1,11 @@
+.jobs {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-gap: 10px;
+    /* background-color: white; */
+    color: wheat;
+    min-width: 60%;
+    min-height: 20px;
+    /* border: ; */
+}

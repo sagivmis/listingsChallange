@@ -12,6 +12,7 @@ import myhome from "../../assets/myhome.svg";
 import photosnap from "../../assets/photosnap.svg";
 import shortly from "../../assets/shortly.svg";
 import theairfiltercompany from "../../assets/the-air-filter-company.svg";
+import Button from "../Button/Button";
 
 const svgs = [
     account,
@@ -45,16 +46,59 @@ const Job = ({ job }) => {
         });
         return svgNeeded;
     };
+
+    const daysBetweenDates = (date1, date2) => {
+        let diff = Math.abs(date1.getTime() - date2.getTime());
+        return diff / (1000 * 60 * 60 * 24);
+    };
     const currentSvg = currentCompanySVG();
     const [svg, setSvg] = useState(currentSvg);
+
+    const tagsToAdd = [job.role, job.level, ...job.languages];
+    if (job.tools) tagsToAdd.push(...job.tools);
+
+    const timeSincePosted = daysBetweenDates(
+        new Date(),
+        new Date(job.timeRegistered)
+    );
+    let newJob = false;
+    const date = new Date();
+    const [month, day, year] = [
+        date.getMonth() + 1,
+        date.getDate(),
+        date.getFullYear(),
+    ];
+    let [dayJob, monthJob, yearJob] = job.timeRegistered.split("/");
+    dayJob = parseInt(dayJob);
+    monthJob = parseInt(monthJob);
+    yearJob = parseInt(yearJob);
+    if (yearJob === year && monthJob === month && dayJob - day <= Math.abs(7))
+        newJob = true;
 
     return (
         <div className={`job ${job.isFeatured ? "selected" : ""}`}>
             <img src={svg} alt='svg' />
+            <span className='company-name'>{job.listedCompany}</span>
+            <div className='listing-tags'>
+                {newJob && <Button text={`NEW!`} classN={`btn rounded`} />}
+                {job.isFeatured && (
+                    <Button
+                        text={`FEATURED`}
+                        classN={`btn rounded`}
+                        color={"hsl(180, 29%, 30%)"}
+                        textColor={"#fff"}
+                    />
+                )}
+            </div>
             <p className='job-title'>{job.listingTitle}</p>
             <span className='job-details'>
                 {job.timeRegistered} • {job.listingType} • {job.listingLocation}
             </span>
+            <div className='tags'>
+                {tagsToAdd.map((tag) => (
+                    <Button text={`${tag}`} />
+                ))}
+            </div>
         </div>
     );
 };

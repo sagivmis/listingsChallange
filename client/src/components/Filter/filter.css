@@ -1,0 +1,24 @@
+.filter {
+    position: absolute;
+    top: 100px;
+    width: 77.5%;
+    left: 11.25%;
+}
+.filter-input {
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
+        rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+        rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+input {
+    width: 100%;
+    height: 20px;
+    border-radius: 25px;
+    border: none;
+    padding: 20px;
+    outline: 0;
+}
+
+input:active {
+    border: none;
+    outline: 0;
+}

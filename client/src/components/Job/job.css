@@ -24,6 +24,16 @@
     font-weight: 700;
 }
 
+.job-title:hover {
+    color: hsl(180, 29%, 50%);
+    cursor: pointer;
+}
+.company-name {
+    position: absolute;
+    left: 150px;
+    top: 45px;
+    color: hsl(180, 29%, 50%);
+}
 .job-details {
     display: inline-block;
     position: absolute;
@@ -32,4 +42,16 @@
     font-weight: 500;
     color: rgba(0, 0, 0, 0.3);
     font-size: 14px;
+}
+
+.tags {
+    position: absolute;
+    right: 30px;
+    top: 45%;
+}
+
+.listing-tags {
+    position: absolute;
+    left: 250px;
+    top: 37.5px;
 }

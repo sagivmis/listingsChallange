@@ -1,7 +1,6 @@
 // import dummy from "./DummyData";
 
 const dummy = require("./DummyData");
-console.log(dummy);
 const express = require("express");
 const { port } = require("./config.json");
 const {

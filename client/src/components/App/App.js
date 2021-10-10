@@ -3,45 +3,58 @@ import axios from "axios";
 import "./App.css";
 import Jobs from "../Jobs/Jobs";
 import Filter from "../Filter/Filter";
+
 function App() {
     const [data, setData] = useState();
-    const [filteredData, setFilteredData] = useState();
+    const [jobs, setJobs] = useState();
     const [filters, setFilters] = useState();
+
     const fetchData = async () => {
         try {
             await axios
                 .get("http://localhost:8080/data")
                 .then(({ data }) => setData(data.data));
+            // .then(() => {
+            //     setJobs(data);
+            // });
         } catch (err) {
             console.log(err);
         }
     };
-    const filterData = () => {
-        data.map((job) => {
-            const tags = [job.role, job.level, ...job.languages];
-            if (job.tools) tags.push(...job.tools);
-            if (filters)
-                filters.forEach((filter) => {
-                    // console.log(filters);
-                    if (tags.includes(filter)) {
-                        if (filteredData)
-                            setFilteredData([...filteredData, job]);
-                        else setFilteredData([job]);
-                    }
-                });
-            // for (const filter in filters) {
-            //     console.log(filters);
-            //     if (tags.includes(filter)) {
-            //         console.log("includes");
-            //         setFilteredData(...filteredData, job);
-            //     }
-            // }
+    const existsByIdInFiltered = (id) => {
+        jobs.forEach((job) => {
+            if (job.id === id) return false;
         });
+        return true;
+    };
+    let filtered = [];
+    const filterData = () => {
+        // setJobs();
+        filtered = [];
+        if (data && filters)
+            data.map((job) => {
+                const tags = [job.role, job.level, ...job.languages];
+                if (job.tools) tags.push(...job.tools);
+                if (filters)
+                    filtered = filters.map((filter) => {
+                        if (tags.includes(filter)) {
+                            if (jobs)
+                                if (!existsByIdInFiltered(job.id))
+                                    setJobs([...jobs, job]);
+                                else setJobs([...jobs]);
+                            else if (!jobs) setJobs([job]);
+                        }
+                    });
+            });
+        console.log(data);
+        console.log(filters);
+        console.log(jobs);
     };
     useEffect(() => {
-        if (!filters) fetchData();
-        else filterData();
-    }, [data, filteredData]);
+        fetchData();
+        // filterData();
+        // setFilters();
+    }, [filters, jobs]);
     return (
         <div className='App'>
             <header />
@@ -53,8 +66,14 @@ function App() {
                         setFilters={setFilters}
                     />
                 )}
-                {!filters && data && <Jobs data={data} setData={setData} />}
-                {filters && data && <Jobs data={data} setData={setData} />}
+                {/* {data && <Jobs data={data} setData={setData} />} */}
+                {!filters && data && (
+                    <Jobs data={data} setData={setData} filters={filters} />
+                )}
+                {console.log(jobs)}
+                {jobs && (
+                    <Jobs data={jobs} setData={setJobs} filters={filters} />
+                )}
             </div>
         </div>
     );

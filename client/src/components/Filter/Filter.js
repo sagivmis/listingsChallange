@@ -6,9 +6,9 @@ const Filter = ({ filters, setFilters, filterData }) => {
         if (e.keyCode === 13) {
             let text = e.target.value;
             if (!filters) setFilters([text]);
-            else setFilters([...filters, text]);
-            console.log(text);
-            console.log(filters);
+            else {
+                if (!filters.includes(text)) setFilters([...filters, text]);
+            }
             filterData();
         }
     };

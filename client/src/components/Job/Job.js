@@ -47,16 +47,16 @@ const Job = ({ job }) => {
         return svgNeeded;
     };
 
-    const daysBetweenDates = (date1, date2) => {
-        let diff = Math.abs(date1.getTime() - date2.getTime());
-        return diff / (1000 * 60 * 60 * 24);
-    };
     const currentSvg = currentCompanySVG();
     const [svg, setSvg] = useState(currentSvg);
 
     const tagsToAdd = [job.role, job.level, ...job.languages];
     if (job.tools) tagsToAdd.push(...job.tools);
 
+    const daysBetweenDates = (date1, date2) => {
+        let diff = Math.abs(date1.getTime() - date2.getTime());
+        return diff / (1000 * 60 * 60 * 24);
+    };
     const timeSincePosted = daysBetweenDates(
         new Date(),
         new Date(job.timeRegistered)

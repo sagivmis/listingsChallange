@@ -1,14 +1,8 @@
 // import dummy from "./DummyData";
 
-const dummy = require("./DummyData");
+let dummy = require("./DummyData");
 const express = require("express");
 const { port } = require("./config.json");
-const {
-    getListing,
-    createListing,
-    editListing,
-    deleteListing,
-} = require("./utils/crud");
 
 const app = express();
 
@@ -19,8 +13,22 @@ app.get("/example", (req, res) => {
 
 app.listen(port, () => console.log(`server is listening on: ${port}`));
 
-app.get(`/listing/:listingName`, (req, res) => {
-    res.json(getListing(listingName));
+app.get(`/listing/:id`, (req, res) => {
+    const result = dummy.filter((job) => {
+        return job.id !== req.params.id;
+    })[0];
+    if (result)
+        res.json({
+            status: 200,
+            message: "Listing Found",
+            data: result,
+        });
+    else
+        res.json({
+            status: 404,
+            message: "Listing Not Found",
+            data: undefined,
+        });
 });
 
 app.get(`/data`, (req, res) => {
@@ -29,19 +37,29 @@ app.get(`/data`, (req, res) => {
 });
 
 app.post(`/listing`, (req, res) => {
+    let details = req.body;
+    if (!details)
+        return {
+            status: "404",
+            message: "Details Required to create a listing",
+        };
+
     let listing = {
-        isFeatured: false,
-        listingTitle: "Dummy Frontend Developer",
-        listedCompany: "Dummy Photosnap",
-        listingLocation: "Dummy USA only",
-        timeRegistered: "Dummy 02/10/2021",
-        listingType: LISTING_TYPES.FULL_TIME,
-        role: ROLES.FRONTEND,
-        level: LEVELS.SENIOR,
-        languages: [LANGUAGES.HTML, LANGUAGES.CSS, LANGUAGES.JS],
-        tools: [],
+        id: dummy.length,
+        isFeatured: details.isFeatured,
+        listingTitle: details.listingTitle,
+        listedCompany: details.listedCompany,
+        listingLocation: details.listedLocation,
+        timeRegistered: details.timeRegistered,
+        listingType: details.listingType,
+        role: details.role,
+        level: details.level,
+        languages: details.languages,
+        tools: details.tools,
     };
-    res.json(createListing(listing));
+
+    dummy.push(listing);
+    res.json({ status: 200, message: "Listing Created", data: listing });
 });
 
 app.put(`/edit/:id`, (req, res) => {
@@ -49,27 +67,41 @@ app.put(`/edit/:id`, (req, res) => {
 });
 
 app.delete(`/delete/:id`, (req, res) => {
-    res.json(deleteListing(id));
+    let removedJob;
+    dummy.filter((job) => {
+        if (job.id !== req.params.id) removedJob = job;
+        return job.id !== req.params.id;
+    });
+    dummy = dummy.filter((job) => {
+        return job.id !== req.params.id;
+    });
+    if (!removedJob) {
+        res.json({
+            status: "404",
+            message: "Did not Find Listing",
+        });
+        return;
+    }
+    res.json({
+        status: "200",
+        message: "Listing deleted",
+        data: removedJob,
+    });
 });
 
 const adminPass = 1234;
 const textInput = "1234";
+
 if (parseInt(textInput) === adminPass) {
     console.log("Success.");
 }
 
-/*
-----------------
-utils/crud.js::
-----------------
+module.exports.editListings = function (id, newDetails) {
+    const entryID = entries.find((entry) => entry.id == id);
+    if (!entryID) return { status: 404, message: "Listing Not Found" };
 
-API calls:
-
-  createListing
-  getListing
-  editListing
-  deleteListing
-
-
-
-*/
+    for (const property in newDetails) {
+        entries[entryID][property] = newDetails[property];
+    }
+    return { status: 200, message: "Listing Edited", data: entries[entryID] };
+};

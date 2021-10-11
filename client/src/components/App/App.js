@@ -49,8 +49,6 @@ function App() {
     };
     useEffect(() => {
         fetchData();
-        // filterData();
-        // setFilters();
     }, [jobs, data]);
     return (
         <div className='App'>

@@ -13,6 +13,8 @@ import photosnap from "../../assets/photosnap.svg";
 import shortly from "../../assets/shortly.svg";
 import theairfiltercompany from "../../assets/the-air-filter-company.svg";
 import Button from "../Button/Button";
+import { Label, Icon } from "semantic-ui-react";
+import axios from "axios";
 
 const svgs = [
     account,
@@ -74,7 +76,23 @@ const Job = ({ job }) => {
     yearJob = parseInt(yearJob);
     if (yearJob === year && monthJob === month && dayJob - day <= Math.abs(7))
         newJob = true;
-
+    const deleteJob = async (e) => {
+        let jobId = parseInt(e.target.classList[1]);
+        try {
+            await axios
+                .delete(`http://localhost:8080/delete/${jobId}`)
+                .then(({ data }) => {
+                    console.log(`Deleted Job no. ${jobId}`, data);
+                    return data;
+                })
+                .then(({ data }) => {
+                    console.log(data);
+                })
+                .then();
+        } catch (err) {
+            console.error(err);
+        }
+    };
     return (
         <div className={`job ${job.isFeatured ? "selected" : ""}`}>
             <img src={svg} alt='svg' />
@@ -87,6 +105,7 @@ const Job = ({ job }) => {
                         classN={`btn rounded`}
                         color={"hsl(180, 29%, 30%)"}
                         textColor={"#fff"}
+                        icon='delete'
                     />
                 )}
             </div>
@@ -98,6 +117,15 @@ const Job = ({ job }) => {
                 {tagsToAdd.map((tag) => (
                     <Button text={`${tag}`} />
                 ))}
+            </div>
+            <div className={`delete-job ${job.id}`}>
+                <Button
+                    text={"X"}
+                    classN={`delete-btn ${job.id}`}
+                    color='red'
+                    textColor='white'
+                    onClick={deleteJob}
+                />
             </div>
         </div>
     );

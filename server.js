@@ -3,8 +3,10 @@
 let dummy = require("./DummyData");
 const express = require("express");
 const { port } = require("./config.json");
-
+const cors = require("cors");
 const app = express();
+
+app.use(cors());
 
 app.get("/example", (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -14,6 +16,7 @@ app.get("/example", (req, res) => {
 app.listen(port, () => console.log(`server is listening on: ${port}`));
 
 app.get(`/listing/:id`, (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     const result = dummy.filter((job) => {
         return job.id !== req.params.id;
     })[0];
@@ -37,6 +40,7 @@ app.get(`/data`, (req, res) => {
 });
 
 app.post(`/listing`, (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     let details = req.body;
     if (!details)
         return {
@@ -63,18 +67,19 @@ app.post(`/listing`, (req, res) => {
 });
 
 app.put(`/edit/:id`, (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     res.json(editListing(id));
 });
 
 app.delete(`/delete/:id`, (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     let removedJob;
-    dummy.filter((job) => {
-        if (job.id !== req.params.id) removedJob = job;
-        return job.id !== req.params.id;
+    dummy.forEach((job) => {
+        if (job.id === parseInt(req.params.id)) removedJob = job;
     });
-    dummy = dummy.filter((job) => {
-        return job.id !== req.params.id;
-    });
+    dummy = dummy.filter((job) => job.id !== parseInt(req.params.id));
+    // dummy = dummy.filter((job) => job.id !== req.params.id);
+    // console.log(dummy);
     if (!removedJob) {
         res.json({
             status: "404",
@@ -86,6 +91,7 @@ app.delete(`/delete/:id`, (req, res) => {
         status: "200",
         message: "Listing deleted",
         data: removedJob,
+        wholeData: dummy,
     });
 });
 

@@ -55,3 +55,10 @@
     left: 250px;
     top: 37.5px;
 }
+
+.delete-job {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: red;
+}

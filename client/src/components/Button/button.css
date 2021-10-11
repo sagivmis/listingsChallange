@@ -36,3 +36,36 @@
     padding: 6px 10px;
     font-size: 12px;
 }
+
+.delete-btn {
+    display: inline-block;
+    background-color: hsl(180, 29%, 90%);
+    color: hsl(180, 29%, 50%);
+    border: none;
+    padding: 5px 8px;
+    margin: 3px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 10px;
+    font-family: inherit;
+    filter: brightness(1);
+    z-index: 1000;
+}
+
+.delete-btn:hover {
+    filter: brightness(1.38);
+    transform: scale(1.15);
+    background-color: hsl(180, 29%, 30%);
+    color: #fff;
+
+    transition: 0.25s;
+}
+
+.delete-btn:focus {
+    outline: none;
+}
+
+.delete-btn:active {
+    transform: scale(0.97);
+}

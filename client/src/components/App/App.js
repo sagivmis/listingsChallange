@@ -29,32 +29,29 @@ function App() {
     };
     let filtered = [];
     const filterData = () => {
-        // setJobs();
+        setJobs();
         filtered = [];
         if (data && filters)
             data.map((job) => {
                 const tags = [job.role, job.level, ...job.languages];
                 if (job.tools) tags.push(...job.tools);
-                if (filters)
-                    filtered = filters.map((filter) => {
-                        if (tags.includes(filter)) {
-                            if (jobs)
-                                if (!existsByIdInFiltered(job.id))
-                                    setJobs([...jobs, job]);
-                                else setJobs([...jobs]);
-                            else if (!jobs) setJobs([job]);
+                console.log(tags, filters);
+                if (filters) {
+                    for (let i = 0; i < filters.length; i++) {
+                        if (tags.includes(filters[i])) {
+                            filtered.push(job);
+                            break;
                         }
-                    });
+                    }
+                    setJobs(filtered);
+                }
             });
-        console.log(data);
-        console.log(filters);
-        console.log(jobs);
     };
     useEffect(() => {
         fetchData();
         // filterData();
         // setFilters();
-    }, [filters, jobs]);
+    }, [jobs, data]);
     return (
         <div className='App'>
             <header />

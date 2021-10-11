@@ -65,7 +65,6 @@ function App() {
                 {!filters && data && (
                     <Jobs data={data} setData={setData} filters={filters} />
                 )}
-                {console.log(jobs)}
                 {jobs && (
                     <Jobs data={jobs} setData={setJobs} filters={filters} />
                 )}
